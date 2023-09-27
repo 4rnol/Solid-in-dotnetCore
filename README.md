@@ -1,0 +1,1 @@
+# Solid-in-dotnetCore
