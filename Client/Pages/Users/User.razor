@@ -1,0 +1,48 @@
+﻿@page "/User"
+@attribute [Authorize]
+
+<h3>Users</h3>
+
+<div>
+    <div class="form-group">
+        <label>Nombre</label>
+        <input class="form-control" @bind-value="@viewModel.SiUsuario.UsNombre" />
+    </div>
+    <div class="form-group">
+        <label>Departamento</label>
+        <input class="form-control" @bind-value="@viewModel.SiUsuario.UsDepto" />
+    </div>
+    <div class="form-group">
+        <label>Login</label>
+        <input class="form-control" @bind-value="@viewModel.SiUsuario.UsLogin" />
+    </div>
+    <div class="form-group">
+        <label>Contraseña</label>
+        <input class="form-control" @bind-value="@viewModel.SiUsuario.UsPassword" />
+    </div>
+</div>
+
+@if (viewModel.SiUsuarios != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Depto</th>
+                <th>Log</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usr in viewModel.SiUsuarios)
+            {
+                <tr>
+                    <td>@usr.UsNombre</td>
+                    <td>@usr.UsDepto</td>
+                    <td>@usr.UsLogin</td>
+                    <td>@usr.UsPassword</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,85 @@
+﻿@page "/cobranzas"
+@attribute [Authorize]
+
+<div class="row" >
+    <div class="col-3" >
+        <h3 style="color:#fed601; border-bottom:3px solid #00a950">Clientes</h3>
+        <EditForm Model="@clientsModel" OnSubmit="SubmitSearch">            
+            <div class="input-group rounded">
+                <InputText type="search" class="form-control rounded" placeholder="Buscar Cliente" @bind-Value="@clientsModel.search" aria-label="Search" aria-describedby="search-addon" />
+                <span class="input-group-text border-0" id="search-addon">
+                    <i class="fas fa-search"></i>
+                </span>
+            </div>            
+        </EditForm>
+        <div class="overflow-auto" style="height: 86vh">
+            @if (clientsModel.FcClienteList != null)
+            {
+                @foreach (var client in clientsModel.FcClienteList)
+                {
+                    <Client client="@client" OnClick="@(async ()=>await PendingPayments(client.ClId))" id="@cliid"/>                    
+                }
+            }
+        </div>                  
+    </div>
+    <div class="col-4">
+        <h3  style="color:#fed601; border-bottom:3px solid #00a950;">Cobranza</h3>
+        <div>
+            <h2 class="text-white"> Total Pagar: <span>@String.Format("{0:0.00}", @TotalPagar)</span> </h2>
+            <button class="btn-light" onclick="">Cobrar <i class="fas fa-money-bill"></i></button>
+            
+        </div>
+
+    </div>
+    <div class="col-5 overflow-auto" style="height: auto">
+        <h3 style="color:#fed601; border-bottom:3px solid #00a950">Cobranzas Pendientes</h3>
+        <table class="table table-light table-striped" >
+            <thead>
+                <tr>
+                    <th scope="col">Año</th>
+                    <th scope="col">Mes</th>
+                    <th scope="col">Apcf</th>
+                    <th scope="col">Apcv</th>
+                    <th scope="col">Alc</th>
+                    <th scope="col">Rc</th>
+                    <th scope="col">Descuento</th>
+                    <th scope="col">Importe Total</th>
+                    <th scope="col">Cobrar</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (CobranzaLista != null)
+                {
+                    @foreach (var payment in CobranzaLista)
+                    {
+                        <tr>
+                            <td>@payment.FcAño</td>
+                            <td>@(mesesLit[(int)payment.FcMes-1])</td>
+                            <td>@String.Format("{0:0.00}", payment.FcApcf)</td>
+                            <td>@String.Format("{0:0.00}", payment.FcApcv)</td>
+                            <td>@String.Format("{0:0.00}", payment.FcAlc)</td>
+                            <td>@String.Format("{0:0.00}", payment.FcRc)</td>
+                            <td>@String.Format("{0:0.00}", payment.LeMonto)</td>
+                            <td>@String.Format("{0:0.00}",(payment.FcApcf + payment.FcApcv + payment.FcAlc + payment.FcRc - payment.LeMonto))</td>
+                            <td>
+                                <input type="checkbox" id="payment.FcClid" @bind="payment.Checked" @onclick="(()=>SelectPayments(payment))"  style="-ms-transform: scale(2); -moz-transform: scale(2); -webkit-transform: scale(2); -o-transform: scale(2); transform: scale(2); padding: 10px" />
+                                
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        @**
+        @if (CobranzaLista != null)
+        {
+        @foreach (var payment in CobranzaLista)
+        {
+        <ClientPayment payment="@payment" OnClickPayment="@(()=>SelectPayments(payment))" paymentList="@PaymentList"/>
+        }
+        }
+        **@
+    </div>               
+</div>
+

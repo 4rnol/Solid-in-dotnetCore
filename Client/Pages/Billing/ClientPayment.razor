@@ -1,0 +1,48 @@
+﻿@using Epsa.Shared.Entities;
+@using Epsa.Shared.Models;
+
+<div class="card m-2" style="width: auto; background-color:@color" @onclick="PaymentSelected">
+    <div class="card-body">
+        <h6>Fecha: <span>@payment.FcImporteTotal </span></h6>        
+    </div>
+</div>
+@code {
+    [Parameter]
+    public CobranzaDataViewModel payment { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnClickPayment { get; set; }
+
+    [Parameter]
+    public FcAlta _fcAlta { get; set; }
+
+    [Parameter]
+    public List<CobranzaDataViewModel> paymentList { get; set; }
+
+    private string color = "white";
+    private async Task PaymentSelected()
+    {        
+        if (paymentList.Contains(payment))
+        {
+            color = "white";
+        }
+        else
+        {
+            color = "#00ab63";
+        }
+        await OnClickPayment.InvokeAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+        }
+        else
+        {
+            if (paymentList.Count == 0) color = "white";            
+        }
+    }
+
+}

@@ -1,0 +1,32 @@
+﻿@page "/login"
+@using Pages.Users
+@layout AuthLayout
+
+<div class="col-3 _margintop">
+    <div class="card">
+        <h4 class="card-header m-2">Iniciar Sesión</h4>
+        <div class="card-body">
+            <EditForm Model="@loginModel" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group m-3">                    
+                    <InputText @bind-Value="loginModel.Username" id="username" class="form-control" placeholder="Usuario"/>
+                    <ValidationMessage For="@(() => loginModel.Username)" />
+                </div>
+                <div class="form-group m-3">
+                    <InputText @bind-Value="loginModel.Password" type="password" id="password" class="form-control" placeholder="Contraseña"/>
+                    <ValidationMessage For="@(() => loginModel.Password)" />
+                </div>
+                <button disabled="@loading" class="btn btn-primary m-3" id="login_button">
+                    @if (loading)
+                    {
+                        <span class="spinner-border spinner-border-sm mr-1"></span>
+                    }
+                    Iniciar Sesión
+                </button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+@code {
+
+}

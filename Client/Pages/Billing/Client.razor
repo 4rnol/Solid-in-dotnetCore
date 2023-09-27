@@ -1,0 +1,26 @@
+﻿@using Epsa.Shared.Entities
+
+<div class="card m-2" @onclick="ProductSelected" style="width: auto; background-color:@(id == client.ClId ? "#00ab63" : "white")">
+    <div class="card-body">
+        <h6>Nombre: <span>@client.ClPaterno @client.ClMaterno @client.ClNombre </span></h6>
+        <h6>CI RUC: <span>@client.ClRuc</span></h6>
+        <h6><span>@client.ClCirun</span></h6>        
+
+    </div>
+</div>
+@code {
+    [Parameter]
+    public FcCliente client { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter]
+    public int id { get; set; }
+
+    private async Task ProductSelected()
+    {
+        await OnClick.InvokeAsync();
+    }
+
+}
