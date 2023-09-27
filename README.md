@@ -13,3 +13,8 @@ Clients should not be forced to depend on methods they do not use.
 
 Dependency Inversion Principle
 High-level modules should not depend on low-level modules. Both should depend on abstractio
+
+
+
+--------------------------------------------------------------------------------------------
+Is a project to practice, is using a db found in the web with clients and billing
